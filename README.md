@@ -34,3 +34,17 @@ Report it at [https://github.com/cashfree/cashfree_prestashop_kit/issues](https:
 For further queries, reach us at techsupport@gocashfree.com .
 
 ********************************************************************************** 
+
+---
+
+## Free Barcode & QR Code Studio
+
+A static web experience is included in the `web/` directory. Open `web/index.html` in your browser to access a modern generator that supports:
+
+- Barcode creation with selectable formats (Code 128, EAN, UPC, Code 39, ITF-14, MSI)
+- QR codes with configurable error correction levels
+- Color, size, and label customization
+- Instant PNG/SVG downloads and clipboard support
+- Automatic local history so you can revisit past codes without re-entering data
+
+Everything runs entirely in the browser, keeping your data private.

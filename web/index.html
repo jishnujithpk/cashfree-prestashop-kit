@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Barcode &amp; QR Code Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <script src="assets/script.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__content">
+        <h1>Free Barcode &amp; QR Code Studio</h1>
+        <p>
+          Generate high-quality barcodes and QR codes instantly. Customize the
+          format, colors, and sizes, preview in real time, and download in PNG
+          or SVG—no sign-up required.
+        </p>
+      </div>
+      <div class="hero__actions">
+        <button class="btn btn--primary" data-scroll-target="#generator">Start Creating</button>
+        <a class="btn btn--ghost" href="#faq">Learn More</a>
+      </div>
+    </header>
+
+    <main id="generator" class="main">
+      <section class="panel panel--controls">
+        <h2>Design Controls</h2>
+        <form id="codeForm" class="form">
+          <div class="form__group">
+            <label for="codeType">Code type</label>
+            <div class="segmented">
+              <input type="radio" name="codeType" id="typeBarcode" value="barcode" checked />
+              <label for="typeBarcode">Barcode</label>
+              <input type="radio" name="codeType" id="typeQR" value="qr" />
+              <label for="typeQR">QR Code</label>
+            </div>
+          </div>
+
+          <div class="form__group">
+            <label for="content">Data / text</label>
+            <textarea id="content" placeholder="Enter the information to encode" required></textarea>
+            <small class="hint">Supports UTF-8 text and URLs. Make sure barcode data contains only supported characters for the selected symbology.</small>
+          </div>
+
+          <div class="form__grid">
+            <div class="form__group">
+              <label for="barcodeFormat">Barcode format</label>
+              <select id="barcodeFormat">
+                <option value="CODE128" selected>Code 128 (default)</option>
+                <option value="EAN13">EAN-13</option>
+                <option value="EAN8">EAN-8</option>
+                <option value="UPC">UPC-A</option>
+                <option value="CODE39">Code 39</option>
+                <option value="ITF14">ITF-14</option>
+                <option value="MSI">MSI</option>
+              </select>
+            </div>
+            <div class="form__group">
+              <label for="qrErrorLevel">QR error correction</label>
+              <select id="qrErrorLevel">
+                <option value="L">Low (7%)</option>
+                <option value="M" selected>Medium (15%)</option>
+                <option value="Q">Quartile (25%)</option>
+                <option value="H">High (30%)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form__grid">
+            <div class="form__group">
+              <label for="lineColor">Foreground color</label>
+              <input type="color" id="lineColor" value="#222222" />
+            </div>
+            <div class="form__group">
+              <label for="backgroundColor">Background color</label>
+              <input type="color" id="backgroundColor" value="#ffffff" />
+            </div>
+            <div class="form__group">
+              <label for="codeWidth">Module width</label>
+              <input type="number" id="codeWidth" value="2" min="1" max="10" />
+            </div>
+            <div class="form__group">
+              <label for="codeHeight">Code height</label>
+              <input type="number" id="codeHeight" value="120" min="40" max="400" />
+            </div>
+          </div>
+
+          <div class="form__group form__group--checkbox">
+            <input type="checkbox" id="showValue" checked />
+            <label for="showValue">Display readable value below barcode</label>
+          </div>
+
+          <div class="form__actions">
+            <button type="submit" class="btn btn--primary">Generate code</button>
+            <button type="button" class="btn btn--ghost" id="resetBtn">Reset</button>
+          </div>
+        </form>
+
+        <div class="download-panel">
+          <button class="btn" id="downloadPng">Download PNG</button>
+          <button class="btn" id="downloadSvg">Download SVG</button>
+          <button class="btn" id="copyData">Copy data</button>
+        </div>
+      </section>
+
+      <section class="panel panel--preview">
+        <h2>Live Preview</h2>
+        <div class="preview">
+          <svg id="barcodeOutput" role="img" aria-label="Barcode preview"></svg>
+          <div id="qrOutput" class="qr-output" aria-label="QR code preview"></div>
+        </div>
+        <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="panel panel--history">
+        <div class="panel__header">
+          <h2>Generation History</h2>
+          <button class="btn btn--ghost" id="clearHistory">Clear History</button>
+        </div>
+        <p class="hint">
+          We store your recent creations locally so you can revisit, download, or reuse them instantly.
+        </p>
+        <div id="historyList" class="history"></div>
+      </section>
+    </main>
+
+    <section class="faq" id="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq__item">
+        <h3>Is this generator really free?</h3>
+        <p>
+          Yes. All features are free to use with no watermarks or registration. Everything runs in your browser, so your data never leaves your device.
+        </p>
+      </div>
+      <div class="faq__item">
+        <h3>Which barcode formats are supported?</h3>
+        <p>
+          Choose from popular symbologies including Code 128, EAN, UPC-A, Code 39, ITF-14, and MSI. We rely on the open-source <code>JsBarcode</code> library to ensure standards-compliant output.
+        </p>
+      </div>
+      <div class="faq__item">
+        <h3>How do I download the generated code?</h3>
+        <p>
+          Use the download buttons to export as PNG or SVG. For QR codes, we render to a canvas and convert it on the fly so you get crisp exports at any size.
+        </p>
+      </div>
+      <div class="faq__item">
+        <h3>Can I customize colors and sizes?</h3>
+        <p>
+          Absolutely. Adjust foreground/background colors, module width, height, and more before generating your code.
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Built with ❤️ for instant barcode and QR code creation. No tracking, no ads.</p>
+      <a href="#generator">Back to top</a>
+    </footer>
+  </body>
+</html>
